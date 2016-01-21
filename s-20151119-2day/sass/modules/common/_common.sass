@@ -1,0 +1,66 @@
+// Clearfix 모듈
+// -------------------------------------------
+// Legacy
+.cf:after,
+.clearfix:after
+	content: ''
+	display: block
+	clear: both
+
+// Micro : 오페라 버그 해결
+.micro-clearfix
+	&:before,
+	&:after
+		content: ''
+		display: table
+	&:after
+		clear: both
+
+// images Replacement 모듈
+// -----------------------------------------------------
+.ir
+	overflow: hidden
+	display: block
+	text-indent: -99999em
+
+// ally-hidden모듈 ('Accessibility'의 a와 y를 제외한 철자가 11자이기 때문에 'a11y'라고 부른다.)
+// 스크린리더기 읽을 수 있는 화면 감춤 class 모듈
+// 기본적으로 스크린 리더기가 읽어야 해서 width:1px, height:1px 넣으면 영역이 보여서 margin: -1px 부여.
+// -----------------------------------------------------
+.a11y-hidden
+	position: absolute
+	overflow: hidden
+	clip: rect(0 0 0 0) //css2, IE6·7 고려. 
+	clip: rect(0,0,0,0) // 최신브라우저 문법.
+	width: 1px 
+	height: 1px
+	margin: -1px
+	border: 0
+	padding: 0
+
+	&.focusable:focus
+		overflow: hidden
+		position: static
+		clip: auto
+		clip: auto
+		width: auto
+		height: auto
+		margin: 0
+
+%button
+	background: #34ace0
+	font-weight: bold
+	color: #fff
+	padding: 5px
+
+.button-checkout
+	@extend %button
+	background: #e769a2
+
+.button-checkin
+	@extend %button
+	background: red
+
+
+
+
