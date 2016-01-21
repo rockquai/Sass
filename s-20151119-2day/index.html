@@ -53,6 +53,7 @@
 
 			ㄴ images Replacement 모듈 ( 이미지 대체 기법 - ir )
 				==> .ir 클래서를 넣으면 텍스트는 안 보이고 배경이미지를 넣을 수 있다. 
+				https://github.com/hyunchulkwak/csslint/wiki/Text-indent를-이용한-숨김-텍스트-관련-주의점
 				==> IR 테크닉의 접근성 단점은 고대비 모듈에서 배경 이미지가 안보이는 IE. 즉 윈도우 환경에서 접근성 이슈 발생. 
 				해결하는 방법은 'improve-IR.min.js' 자바스크립트 사용. 
 
@@ -73,7 +74,7 @@
 				border: 0
 				padding: 0
 
-				&.focusable:focus ==> 키보드 포커스
+				&.focusable:focus ==> 키보드 탭 포커스
 					overflow: hidden
 					position: static
 					clip: auto
@@ -93,9 +94,10 @@
 	: base line, column
 
 	3. sass 문법 
-	3-1. 중첩(Nesting) - pdf 22
+	3-1. 중첩(Nesting) - pdf 8, 12, 22
 		- 중첩 규칙을 사용하면 구조를 쉽게 파악. 
 		- 반복적인 선택자 코드 사용량을 대폭 줄일 수 있어 유용.
+		- 중첩 코드는 적당히... 너무 많은 중첩은 쓸데없는 CSS 선택자 남용.
 		- '앤퍼센트(&)' : 부모를 참조하는 선택자 역할 (중첩 부모 참조 선택자)
 
 	3-2. 선택자 상속 - pdf 24 
@@ -130,6 +132,7 @@
 	===> style.sass는 modules별 sass.scss 호출. 
 
 	-box-sizing: border-box (ie8 이상)
+	https://github.com/hyunchulkwak/csslint/wiki/box-sizing-속성의-사용
 	: 입력한 사이즈를 어디까지 포함시킬 것인지 지정.
 	ㄴ content-box : content만
 	ㄴ border-box : padding + border 포함 
