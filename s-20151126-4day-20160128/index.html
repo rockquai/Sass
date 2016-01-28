@@ -28,11 +28,19 @@
 				border: 1px solid red
 
 			.button-checkout 
-				@extend .buttons !optional 
+				@extend .buttons // 오류 발생
+				background-color: darken($color-main, 20%)
+
+			.button-checkout 
+				@extend .button !optional  // 오류 발생하지 않음.
+				background-color: darken($color-main, 20%)
+
+			.button-checkout 
+				@extend .buttons !optional  // 오류 발생하지 않음.
 				background-color: darken($color-main, 20%)
 
 
-	ㄴ 2-2. 플레이스홀더(%) : 대체 선택자 - pdf 31
+	ㄴ 2-2. 플레이스홀더(%) : 대체 선택자 - pdf 31 - 중요!!!
 		:  %선택자는 공개 되지 않는 모듈. 즉 css에서 컴파일(출력) 되지 않는다.  - less에는 없는 개념. 
 		ex.) %reset-mp : css 컴파일 되지 않는다. (#app, #design만 css 컴파일됨.)
 			%reset-mp
