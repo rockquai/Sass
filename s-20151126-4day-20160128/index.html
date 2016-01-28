@@ -14,17 +14,36 @@
 	1. @if 조건문를 이용한 grid on/off switch
 	==> 작업이 끝난 후 grid 제거하기 위해서 if문을 통해 제어
 	- sass > _config.sass
-	=> _config.sass : 변수 설정
-	=> $layout-view: true / false
-		ㄴ값이 true이면 화면에 영역별 색상과 그리드가 그려짐
-		ㄴ값이 false일 경우 화면에 색상/그리드 제거
+	==> _config.sass : 변수 설정
+		ㄴ$layout-view: true (baseline, colume)
+		ㄴ$layout-color: true (layout color)
+		: 값이 true이면 화면에 영역별 색상과 그리드가 그려짐, 값이 false일 경우 화면에 색상/그리드 제거
 
 	2. sass 문법 
 	ㄴ 2-1. !optional flag - pdf 29
 		:  @extend 상속 시, 선언된 선택자가 존재하지 않을 경우 ‘옵션’ 처리하여 오류를 발생 시키지 않음 
 		: 누군가 코어가 될 수 있는 class를 수정했을 때 미연에 방지를 할 수 있다. 
-	ㄴ 2-2. 플레이스홀더(%) : 대체 선택자
+		ex.)
+			.button
+				border: 1px solid red
+
+			.button-checkout 
+				@extend .buttons !optional 
+				background-color: darken($color-main, 20%)
+
+
+	ㄴ 2-2. 플레이스홀더(%) : 대체 선택자 - pdf 31
 		:  %선택자는 공개 되지 않는 모듈. 즉 css에서 컴파일(출력) 되지 않는다.  - less에는 없는 개념. 
+		ex.) %reset-mp : css 컴파일 되지 않는다. (#app, #design만 css 컴파일됨.)
+			%reset-mp
+				margin: 0
+				padding: 0
+
+			#app
+				@extend %reset-mp
+
+			#design
+				@extend %reset-mp
 
 	3. [sublime] 스니펫(snippet)
 	: 자주 사용하는 명령어. (sublime에서만 사용 가능 )
