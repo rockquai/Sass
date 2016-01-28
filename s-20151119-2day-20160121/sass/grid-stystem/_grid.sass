@@ -1,0 +1,74 @@
+//
+ * --------------------------------
+ * 그리드 시스템 설정
+ * --------------------------------
+$u-grind: #00cacd
+$u-dark-violet: #0d0026
+/* 1200px(전체width) / 16px(기본폰트) = 75rem */
+$page-width: 1200px
+
+$columns-count: 12
+$columns-color: rgba($u-grind, 0.3)
+$column-width: $page-width/$columns-count
+
+$leading: 10px
+$leading-color: rgba($u-dark-violet, 0.4)
+
+.container
+	box-sizing: border-box
+	position: relative
+	max-width: $page-width
+	height: 100vh
+	margin:
+		left: auto
+		right: auto
+
+	&:after
+		content: ''
+		display: block
+		clear: both	
+
+	&.grid:before
+		content: ''
+		position: absolute
+		z-index: 10000
+		left: 0
+		top: 0
+		width: 100%
+		height: 110vh
+		background-image: linear-gradient(90deg, $columns-color 50%, transparent 50%), linear-gradient(180deg, transparent 90%, $leading-color)
+		background-size: $column-width*2 $column-width*2, $leading $leading
+
+[class*="col-"]
+	float: left
+	height: 5rem
+
+.col-1
+	//120px(컬럼width) / 16px(기본폰트) = 7.5rem
+	width: 7.5rem
+.col-2
+	//120px(컬럼width)
+	width: 12.5rem
+.col-3
+	width: 18.75rem	
+.col-4
+	width: 25rem
+
+.col-red
+	background: rgba(#ff0000, 0.3)
+.col-green
+	background: rgba(#3cff00, 0.3)
+.col-blue
+	background: rgba(#0c00ff, 0.3)
+.col-yellow
+	backgorund: rgba(#ffa800, 0.3)
+
+
+// layout
+.header
+	width: 100px
+	height: 200px
+
+.content
+	width: 100px
+	height: 200px

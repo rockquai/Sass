@@ -1,0 +1,59 @@
+.page.container
+	@extend %container
+
+.banner-sale
+	@extend %grid-4
+	height: $leading-height * 24
+	@if $layout-color == true
+		background: rgba($u-red, $layout-view-alpha)
+
+.banner-event
+	@extend .banner-sale
+	@if $layout-color == true
+		background: rgba($u-cyan, $layout-view-alpha)
+
+.banner-summer
+	@extend %break
+	height: $leading-height * 20
+	@if $layout-color == true
+		background: rgba($u-light-yellow, $layout-view-alpha)
+
+.content-headline
+	@extend %break
+	@extend %grid-2
+	@extend %push-2
+	height: $leading-height * 24
+	@if $layout-color == true
+		background: rgba($u-dark-gray, $layout-view-alpha)
+
+.content-banner-sale
+	@extend %grid-2
+	@extend %pull-2
+	height: $leading-height * 24
+	@if $layout-color == true
+		background: rgba($u-brown, $layout-view-alpha)
+
+.content-banner-accessories
+	@extend %grid-2
+	height: $leading-height * 24
+	@if $layout-color == true
+		background: rgba($u-dark-orange, $layout-view-alpha)
+
+.content-bag-banner-sale
+	@extend %grid-2
+	@extend %fr
+	height: $leading-height * 24 * 2
+	@if $layout-color == true
+		background: rgba($u-dark-snow, $layout-view-alpha)
+
+.content-shoes-banner
+	@extend %grid-6
+	height: $leading-height * 24
+	@if $layout-color == true
+		background: rgba($u-dark-red-orange, $layout-view-alpha)
+
+.footer-banner
+	@extend %break
+	height: $leading-height * 15
+	@if $layout-color == true
+		background: rgba($u-dark-green, $layout-view-alpha)

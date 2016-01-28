@@ -1,0 +1,95 @@
+//
+ * --------------------------------
+ * 자주 쓰이는 class 모듈
+ * 플레이스홀더(대체) 선택자 
+ * Placeholder Selector: %
+ * ㄴ특징1. 재사용 가능한 모듈
+ * ㄴ특징2. 사용하지 않을 경우 CSS로 처리되지 않는다.
+ * ㄴ특징3. 효율적으로 CSS 코드 관리르 가능케 한다.
+ * --------------------------------
+
+
+// 페이지 가운데 정렬
+%position-center
+	margin:
+		left: auto
+		right: auto
+
+// clearfix
+%cf:after,
+%clearfix:after
+	content: ''
+	display: block
+	clear: both
+
+// clearfix - Micro : 오페라 버그 해결
+%micro-clearfix
+	&:before,
+	&:after
+		content: ''
+		display: table
+	&:after
+		clear: both
+
+// images Replacement 모듈
+%ir
+	overflow: hidden
+	display: block
+	text-indent: -99999em
+
+// Accessibility-hidden모듈
+%a11y-hidden
+	position: absolute
+	overflow: hidden
+	clip: rect(0 0 0 0) //css2, IE6·7 고려. 
+	clip: rect(0,0,0,0) //css3
+	width: 1px 
+	height: 1px
+	margin: -1px
+	border: 0
+	padding: 0
+
+	&.focusable:focus
+		overflow: hidden
+		position: static
+		clip: auto
+		clip: auto
+		width: auto
+		height: auto
+		margin: 0
+
+%border-box
+	box-sizing: border-box
+
+%reset-list
+	padding-left: 0
+	list-style: none
+
+%remove-img-space
+	vertical-align: bottom
+
+// ------------------------------------
+.a11y-hidden
+	@extend %a11y-hidden
+
+.page
+	.wrapper
+		@extend %position-center
+
+[role=navigation]
+	ul
+		@extend %reset-list
+
+	a
+		@extend %remove-img-space
+
+.app-header
+	@extend %border-box
+
+.app-main
+	article
+		@extend %border-box
+
+.app-footer
+	ul
+		@extend %reset-list

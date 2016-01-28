@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGA,cAAgB;EAEd,WAAI,EAAE,IAAI;EACV,YAAK,EAAE,IAAI;;;AAGZ,cAAQ;EAEP,KAAK,ECYO,MAAkE;;ADV9E,+BAAgB;EACf,KAAK,EAAE,IAAI;;AACX,qCAAO;EAEL,WAAI,EAAE,IAAe;EACrB,YAAK,EAAE,IAAe;;AACxB,sCAAQ;EACP,WAAW,ECDA,IAAI;;ADEhB,qCAAO;EACN,YAAY,ECHD,IAAI;;;ADgBnB,8BAAW;EACV,UAAU,EAAE,UAAU;;;AAEvB,oCAAW;EACV,YAAY,EAAE,CAAC;EACf,UAAU,EAAE,IAAI;;;AAEjB,mBAAiB;EAChB,cAAc,EAAE,MAAM",
+"sources": ["../sass/lecture.sass","../sass/settings/_preference.sass"],
+"names": [],
+"file": "lecture.css"
+}

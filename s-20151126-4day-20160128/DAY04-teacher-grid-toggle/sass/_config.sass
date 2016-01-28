@@ -1,0 +1,39 @@
+//
+ * --------------------------------
+ * 컬러 설정
+ * --------------------------------
+$u-red:             #EC003C
+$u-cyan:            #226869
+$u-light-yellow:    #ffedbf
+$u-brown:           #8a3f11
+$u-dark-gray:       #0d0026
+$u-dark-orange:     #d76c2c
+$u-dark-snow:       #e9d9a5
+$u-dark-red-orange: #d9a156
+$u-dark-green:      #6ea57b
+
+//
+ * --------------------------------
+ * 그리드 시스템 설정
+ * --------------------------------
+$page-width: 960px
+$columns-count: 8
+$columns-color: rgba(#7045CF, 0.3)
+$column-width:  $page-width/$columns-count // 960/8 = 120
+
+$leading-height: 10px
+$base-line: 10px
+$leading-color: rgba($u-dark-gray, 0.4)
+
+//
+ * --------------------------------
+ * 레이아웃 뷰 설정
+ * --------------------------------
+// @if 조건문 변수
+// 값이 true이면 화면에 영역별 색상과 그리드가 그려짐
+// 값이 false일 경우 화면에 색상/그리드 제거
+// $layout-view: baseline, colume | $layout-color: layout color
+$layout-view:       true
+$layout-color:       true
+// 화면에 그려지는 영역별 색상 알파 값 설정 (0~1 실수)
+$layout-view-alpha: 0.85
