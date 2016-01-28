@@ -144,12 +144,12 @@ body:hover {
   box-sizing: border-box;
 }
 
-[role=navigation] ul, .app-footer ul {
+.page ul, .app-footer ul {
   padding-left: 0;
   list-style: none;
 }
 
-[role=navigation] a {
+.page img {
   vertical-align: bottom;
 }
 
