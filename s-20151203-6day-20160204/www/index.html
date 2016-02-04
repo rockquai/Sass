@@ -32,6 +32,7 @@
 		: Local, CLI version이 같아야 한다.
 	ㄴ 3-3. gulp 실행
 		$ gulp
+		(sass -w -E utf-8 -t expanded sass:css ==> gulp가 처리)
 
 	4. sass 문법
 	ㄴ 4-1. 변수 기본 값 설정($, !default) - pdf 9
@@ -42,13 +43,16 @@
 	$set-color: #ce4dd6
 
 	#designer
-		width: $set-width // 940px
+		width: $set-width 
+		// 940px
+		// 만약 $set-width: 940px이 없어지면. 1000px
 		color: $set-color
 
 	==> $set-width 값이 설정된 경우 기본 값(!default)보다 우선 적용됩니다.
-
+	
 	ㄴ 4-2. 믹스인 (mixin)
-	: JS함수와 흡사한 믹스인 '='모듈 정의 후, '+' 호출. 재사용이 가능.
+	: JS함수(function)와 흡사한 믹스인 '='모듈 정의 후, '+' 호출. 재사용이 가능.
+	: function이란 일련의 코드를 간단하게 실행하기 위해 하나의 명령으로 만든 것. 비유 예) 라면 레시피
 
 	4-2-1.
 	- scss
