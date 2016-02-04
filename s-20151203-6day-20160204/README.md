@@ -1,46 +1,208 @@
-# Gulp with Sass + Browser-sync ProjectKit `v0.0.3`
+## 6일차 [`2015.12.03`]
 
-`Gulp`, `Node Sass`, `Browser Sync` 등을 활용하는 **프로젝트 툴킷**입니다.
+### 수업 진행 (Sass 중/고급 문법)
 
-## 설치
-본 프로젝트 키트는 `Node.js` 환경에서 구동됩니다. 아래 목록의 플랫폼을 각각 설치해야 정상 작동됩니다. 프로젝트에 사용되는 `Sass` 엔진은 기본적으로 `Node Sass`를 사용합니다.
+#### 믹스인(Mixin)
 
-> **Platforms**
-
-- [node.js](http://nodejs.org/)
-- [Node Sass](https://www.npmjs.com/package/node-sass)
-
--
-
-프로젝트 키트 내부적으로는 `Gulp`, `Bower`, `Browser-Sync` 도구를 사용함으로 <br>
-아래 `CLI` 명령으로 도구를 설치한 후, 개발 의존 모듈을 설치해야 합니다.
-
-> **Tools**
-
-- [Gulp](http://gulpjs.com/)
-- [Bower](http://bower.io)
-
-```sh
-# Gulp, Bower 글로벌 설치
-npm install --global gulp bower
-# package.json에 등록되어 있는 의존 모듈 설치
-npm install
-```
+- 정의(Define: `@mixin`)
+- 호출(Call: `@include`)
+- 확장(인자, Arguments)
+	- 키워드 인자(`$Keyword`)
+	- 복수 인자`...`
 
 ---
 
-## 사용법 (Gulp 명령어)
+#### `sass/modules/_placeholder.sass`
 
-```sh
-# Browser-sync 구동 및 Sass, Watch 업무 수행
-gulp
+```sass
+%a11y-hidden
+	overflow: hidden
+	position: absolute
+	clip:     rect(0 0 0 0) // IE 6,7
+	clip:     rect(0,0,0,0)
+	width:    1px
+	height:   1px
+	margin:   -1px
+	border:   0
+	padding:  0
 
-# HTML, Sass 변경 내용 관찰 후, 브라우저 화면 업데이트 자동 수행
-gulp watch
+	&%focusable:focus
+		overflow: visible
+		position: static
+		clip:     auto
+		width:    auto
+		height:   auto
+		margin:   0
 
-# 생성된 css 폴더 제거 (초기화)
-gulp clean
+%clearfix::after
+	content: ''
+	display: block
+	clear: both
+	.lt-ie8 &
+		zoom: 1
+```
 
-# Sass → CSS 변경 수행 (1회)
-gulp sass
+#### `sass/modules/_mixins.sass`
+
+```sass
+@import placeholder
+
+//
+ * --------------------------------
+ * Sass 믹스인(Mixin)
+ * --------------------------------
+ * 정의: @mixin 믹스인이름() {}
+ * 호출: @include 믹스인이름()
+ * --------------------------------
+ * SCSS 문법
+ * --------------------------------
+ * @mixin box-sizing {
+ * 	-webkit-box-sizing: border-box;
+ * 	-moz-box-sizing: border-box;
+ * 	box-sizing: border-box;
+ * }
+ * --------------------------------
+ * Sass 문법
+ * --------------------------------
+ * =box-sizing
+ * 	-webkit-box-sizing: border-box
+ * 	-moz-box-sizing: border-box
+ * 	box-sizing: border-box
+ * --------------------------------
+
+// [초기화] Global
+=global-reset
+	+reset-box-model
+	+reset-table
+	+reset-list
+	+reset-img
+
+// [초기화] 박스모델
+=reset-box-model
+	margin: 0
+	border: 0
+	padding: 0
+
+// [초기화] 테이블
+=reset-table
+	border-collapse: collapse
+	border-spacing: 0
+	caption
+		@extend %a11y-hidden
+
+// [초기화] 목록
+=reset-list
+	nav, [role=navigation], .gnb, .lnb, .gallery
+		+_reset-list
+=_reset-list
+	margin:
+		top: 0
+		bottom: 0
+	list-style: none
+	padding-left: 0
+
+// [초기화] li > img 하단 공백 제거
+// [초기화] a > img 테두리 제거
+=reset-img
+	li img, li a img
+		vertical-align: bottom
+	a img
+		border: 0
+
+// [초기화] 내비게이션
+=navigation
+	ul
+		+reset-list
+		@extend %clearfix
+	li
+		&:last-child, .last
+			margin-right: 0
+		img
+			+reset-img
+
+// [초기화] HTML5 새로운 요소 블록 설정
+=set-html5-elements-block
+	$html5-new-elements: null !default
+	@if $html5-new-elements != null
+		#{$html5-new-elements}
+			display: block
+
+// ------------------------------------------------------------------------
+
+// [레이아웃] 박스 크기 설정
+=box-sizing
+ * 	-webkit-box-sizing: border-box
+ * 	-moz-box-sizing: border-box
+ * 	box-sizing: border-box
+
+// [레이아웃] position 설정
+=position($position-type: relative, $left: null, $top: null, $right: null, $bottom: null)
+	position: $position-type
+	left: $left
+	top: $top
+
+// [레이아웃] float 설정
+=float($direction: left, $margin: null)
+	float: $direction
+	margin: $margin
+
+// ------------------------------------------------------------------------
+
+// 정적 믹스인
+=link-style-static
+	+link-style()
+
+// 동적 믹스인(확장)
+=link-style($color: #808080, $padding-bottom: 0.001em, $border-bottom: 1px solid)
+	color: $color
+	text-decoration: none
+	&:hover, &:focus
+		padding-bottom: $padding-bottom
+		border-bottom: $border-bottom
+
+// 인자를 여러 개 설정해야 할 경우
+=box-shadow($args...)
+	-webkit-box-shadow: $args
+	-moz-box-shadow: $args
+	box-shadow: $args
+```
+
+#### `sass/style.sass`
+
+```sass
+@import config
+@import modules/mixins
+
++set-html5-elements-block
+
+$pos-type: static
+
+.aside
+	.parent
+		+position($top: 20px)
+	.child
+		+pos(absolute, -30px, -10px)
+
+header
+	+pos()
+	.brand
+		+pos(absolute, 100px)
+
+footer
+	+pos($position-type: fixed, $left: 0px, $bottom: 0px)
+
+.gnb li
+	+float(right, 0 10px 0)
+
+a
+	+link-style(#333, 0.012em, 2px solid darkred)
+
+	.test &
+		+link-style(#25A04D, 0.02em, 4px solid hotpink)
+
+a
+	display: inline-block
+	vertical-align: middle
+	padding: 1em 1.4em
+	+box-shadow(3px 0 4px red, 2px 2px 10px 9px blue)
 ```
