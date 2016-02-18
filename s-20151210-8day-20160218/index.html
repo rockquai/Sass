@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!--[if !IE]><!-->
+<html lang="ko-KR" class="no-js">
+<!--<![endif]-->
+<!--[if IE 8]><html lang="ko-KR" class="ie lt-ie10 ie8 no-js"><![endif]-->
+<!--[if IE 9]><html lang="ko-KR" class="ie lt-ie10 ie9 no-js"><![endif]-->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<title>function - 8day review</title>
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+	/* hack: ie6; */
+	* html .triangle-top {
+		background: #f00;
+	}
+	/* hack: ie7; */
+	*+html .triangle-top {
+		background: #ff0;
+	}
+	/* filter: ie8 */
+	.ie8 .triangle-top {
+		background: #ff8400; 
+	}
+	</style>
+</head>
+<!-- 
+1 컬러 함수(Built-in Color Function) - pdf 58
+: GET / SET
+
+1-1. RGBA 함수(red, green, blue)
+ex1.) GET Function
+$hot-red: #ff0000
+
+$r: red ($hot-red)
+$g: green ($hot-red)
+$b: blue ($hot-red)
+$a: 0.7
+
+@debug '$r #{$r}' //DEBUG: $r red 255
+@debug '$g #{$g}' //DEBUG: $g green 0
+@debug '$b #{$b}' //DEBUG: $b blue 0
+@debug "rgb(#{$r}, #{$g}, #{$b}, #{$a})" //DEBUG: $rgb <255, 0, 0, 0.7>
+
+ex2.) SET Function
+$hot-red: #ff0000
+body 
+	color: rgba( $hot-red, 0.8 )
+
+[css]
+body {
+  color: rgba(255, 0, 0, 0.8);
+}
+
+※hexcode를 사용하면 알파값을 부여할 수 없다. 투명도를 부여하면 오브젝트 전체가 투명해진다.
+
+
+1-2. HSLA 함수 (hue: 색상, saturation: 채도, lightness : 명도) - pdf 65
+ex1.) GET Function
+$hot-red: #ff0000
+
+$hue: hue($hot-red)
+$saturation: saturation($hot-red)
+$lightness: lightness($hot-red)
+
+@debug '$hue #{$hue}' //DEBUG: $hue 1deg
+@debug '$saturation #{$saturation}' //DEBUG: $saturation 56%
+@debug '$lightness #{$lightness}' //DEBUG: $lightness 30%
+
+ex2.) SET Function :_hsla.sass 사용자 정의 함수
+article
+	color: hsla(#742321, 0.45)
+
+[css]
+article {
+  color: hsla(1deg,56%,30%,0.45);
+}
+
+2-1. _hsla.sass 사용자 정의 함수 - pdf 71
+* sass 내장함수 - pdf 74
+ㄴ floor(): 내림함수
+ㄴ round(): 반올림 함수 
+ㄴ ceil(): 올림 함수
+ㄴ unquote(): 따옴표 제거 함수
+ㄴ abs(): 절대값 표시 함수
+ㄴ percentage(): 퍼센트 변경 함수
+
+// 컬러, 각도로 변경 함수
+adjust-hue($color, $degrees)
+=> adjust : 보정. 
+
+// 많이 사용되는 컬러 함수
+lighten($color, $amount) : 밝기
+darken($color, $amount) : 어둠
+saturate($color, $amount) : 채도 ↑
+desaturate($color, $amount) : 채도 ↓
+grayscale($color) : 채도 제거 -> 흑백
+
+
+3. em VS rem
+3-1. em
+- em: 부모 size 상속
+ㄴ> body의 부모는 html는 font-size 기본이 16px. 16px = 1em
+ex1.)
+	body
+		font-size: 1.4em //16px * 1.4 = 22.4px
+		div
+			font-size: 0.7em // 22.4px * 0.7 = 15.68px
+			span
+				font-size: 0.97em // 15.68px * 0.97 = 15.2096px
+===> 중접이 계속되서 쓰기가 어렵다. em의 단점을 보완하기 위해 나온 단위가 rem. 
+
+3-2. rem (root em)
+: 최상위 요소인 'html요소에 비례하여 크기를 가지는 단위
+즉 html 요소에 font-size를 고정값으로 지정해두면 나머지는 그 비율에 따라 크기를 계산
+html는 font-size 기본이 16px.
+ex1.)
+	body
+		font-size: 1.4em //16px * 1.4 = 22.4px
+		div
+			font-size: 0.7em // 16px * 0.7 = 11.2px
+			span
+				font-size: 0.97em // 16px * 0.97 = 15.52px
+
+
+3-3. _rem.sass 사용자 함수
+: PX → REM 함수, 결과 값 반환(return)
+
+@function 함수이름( $전달인자 ) {
+	함수 처리 과정
+	.
+	.
+	.
+	@return 반환 값;
+}
+
+@function rem( $px, $base: 16 )
+	$result: (($px / ($px * 0 + 1)) / $base) + rem
+	@return $result
+
+★ 단위를 제거하기 위해 필요한 공식
+	$result: (($px / ($px * 0 + 1)) / $base) + rem
+	
+ex1.) rem()함수 
+body
+	font-size: rem(12px)
+ 
+[css]
+body {
+  font-size: 0.75rem;
+}
+
+4. _font-size.sass 믹스인
+@import ../function/rem
+$polyfill-rem: true !default 
+=font-size( $px: null, $base: 16 )
+	@if $px == null
+		@error "px 단위 값을 전달해주어야 합니다."
+
+	@if $polyfill-rem == true //'true/false' ==> font-size: $px '표출/비표출'.
+		font-size: $px
+
+	font-size: rem( $px, $base ) // _rem.sass 함수
+
+5. function vs mixin 차이
+ㄴfunction : 연산된 retrun값을 반환. 
+ㄴmixin : 코드 자제를 반환.
+  
+6. 960 gird - % 구현 방법
+8-1. [Pattern 1] @if문 제어 
+$is-flexible: true  // true==> width: 6.25%, false ==> width: 60px
+$page-width: 960px
+$gutter: 10px
+
+.grid-1
+	$width: 60px
+	float: left
+	@if $is-flexible
+		width: percentage($width/$page-width)
+	@else
+		width: $width
+	margin-left: $gutter
+	margin-right: $gutter
+	
+[css]
+.grid-1 {
+  float: left;
+  width: 6.25%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+		
+6-2. [Pattern 2] 부모에게 '.fluid' 부여
+$page-width: 960px
+$gutter: 10px
+
+%grid-module
+	float: left
+	margin:
+		left: $gutter
+		right: $gutter	
+	height: 50px
+	background: #000
+	color: #fff
+	text-align: center	
+	
+.grid-1
+	@extend %grid-module
+	$width: 60px
+	width: $width
+	.fluid &
+		width: percentage($width/$page-width)
+
+.grid-2
+	@extend %grid-module
+	$width: 140px
+	width: $width
+
+	.fluid &
+		width: percentage($width/$page-width)	
+
+[css]	
+.grid-1, .grid-2 {
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 50px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.grid-1 {
+  width: 60px;
+}
+.fluid .grid-1 {
+  width: 6.25%;
+}
+
+.grid-2 {
+  width: 140px;
+}
+.fluid .grid-2 {
+  width: 14.58333%;
+}	
+-->
+
+<body class="fluid">
+	<div class="container">
+		<div class="grid-1">grid 1</div>
+		<div class="grid-2">grid 2</div>
+		<div class="grid-1">grid 1</div>
+		<div class="grid-2">grid 2</div>
+		<div class="grid-1">grid 1</div>
+		<div class="grid-2">grid 2</div>
+		<div class="grid-1">grid 1</div>
+		<div class="grid-2">grid 2</div>
+	</div>
+
+	<div class="triangle-top"></div>
+</body>
+</html>

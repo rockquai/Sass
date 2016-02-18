@@ -1,0 +1,64 @@
+//============================================
+// 인자값 사용법
+// @mixin for-ie6($selector) {
+// 	* html #{$selector} {
+// 		@content;
+// 	}
+// }
+
+// @mixin for-ie7($selector) {
+// 	*+html #{$selector} {
+// 		@content;
+// 	}
+// }
+//============================================
+
+//============================================
+// 인자값을 사용하지 않는 경우
+//ex1 - 
+// @mixin for-ie6($content: null){
+// 	* html {
+// 		@content;
+// 		&:after{
+// 			content: $content;
+// 		}
+// 	}
+// }
+
+//ex2 - if문
+// @mixin for-ie6($selector: null){
+// 	* html {
+// 		@content;
+		
+// 		@if $selector{
+// 			#{$selector} {
+// 				content: 'print code';
+// 			}
+// 		}
+// 	}
+// }
+
+//ex3. type-of
+@mixin for-ie6($selector: null){
+	* html {
+		@content;
+		@if type-of($selector) != null {
+			#{$selector} {
+				content: 'print code';
+			}
+		}
+	}
+}
+
+
+@mixin for-ie7 {
+	*+html {
+		@content;
+	}
+}
+
+@mixin for-ie8 {
+	@media \0screen {
+		@content;
+	}
+}

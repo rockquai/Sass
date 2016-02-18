@@ -1,0 +1,63 @@
+body {
+  color: rgba(255, 0, 0, 0.8);
+}
+
+article {
+  color: hsla(1deg,56%,30%,0.45);
+  border-color: #220000;
+}
+
+body {
+  font-size: 0.75rem;
+}
+
+#app .fontsize-function-type {
+  font-size: 1.3125rem;
+}
+
+.triangle-top {
+  width: 100px;
+  height: 100px;
+  background: #00ffea;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.grid-1, .grid-2 {
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 50px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.grid-1 {
+  width: 60px;
+}
+.fluid .grid-1 {
+  width: 6.25%;
+}
+
+.grid-2 {
+  width: 140px;
+}
+.fluid .grid-2 {
+  width: 14.58333%;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,140 @@
+// 모듈 로드
+// ------------------------------------------
+
+// 환경설정 모듈 호출
+@import config
+
+// 재사용 가능한 모듈들을 호출
+@import modules/shapes/circle/circle
+@import modules/shapes/rectangle/rectangle
+@import modules/shapes/triangle/triangle
+
+// 사용자 정의 함수
+// User Defined Functions Module
+@import modules/function/hsla
+@import modules/function/rem
+
+// 사용자 정의 믹스인
+// User Defined Mixins Module
+@import modules/mixins/font-size
+
+// IE6-8을 위한 핵 (권장 X)
+@import modules/common/for-old-ie
+
+//
+ * --------------------------------
+ * 8일차 수업 내용
+ *
+ * 컬러 함수(Built-in Color Function)
+ * GET / SET
+ * red()
+ * green()
+ * blue()
+ * --------------------------------
+
+$hot-red: #ff0000
+
+body 
+	//[rgb] SET Function
+	color: rgba( $hot-red, 0.8 )
+
+//GET Function
+$r: red($hot-red)
+$g: green($hot-red)
+$b: blue($hot-red)
+$a: 0.7
+// @debug '$r #$r}'
+// @debug '$g #$g}'
+// @debug '$b #$b}'
+// @debug "rgb(#$r}, #$g}, #$b}, #$a})"
+
+// [HSLA] SET Function
+$hue: hue($hot-red)
+$saturation: saturation($hot-red)
+$lightness: lightness($hot-red)
+// @debug '$hue #{$hue}'
+// @debug '$saturation #{$saturation}'
+// @debug '$lightness #{$lightness}'
+
+//$my-color: #B090F5
+// @debug lighten($my-color, 30%)
+// @debug darken($my-color, 30%)
+// @debug saturate($my-color, 10%)
+// @debug desaturate($my-color, 24%)
+// @debug grayscale($my-color)
+
+article
+	color: hsla(#742321, 0.45)
+	border-color: darken(#800, 20%) 
+	// 전달인자 없이 호출해도 hsla()에 설정된 기본값이 출력.
+
+body
+	font-size: rem(12px) //font-size: 0.75rem
+
+#app
+	.fontsize-function-type
+		font-size: rem(21px)
+
+	.fontsize-mixin-type
+		+font-size(21px)
+		//[_config.sass] $polyfill-rem: 'true / false' 설정하면 px단위 '표출 / 비표출'.
+
+.triangle-top
+	width: 100px
+	height: 100px
+	background: #00ffea
+
+body
+	margin: 0
+
+.container
+	max-width: 960px
+	margin:
+		left: auto
+		right: auto
+	&:after
+		content: ''
+		display: block
+		clear: both
+
+$is-flexible: true // true==> %, false ==> px
+$page-width: 960px
+$gutter: 10px
+
+// [Pattern 1] @if문 제어 방식.
+// .grid-1
+// 	$width: 60px
+// 	float: left
+// 	@if $is-flexible
+// 		width: percentage($width/$page-width)
+// 	@else
+// 		width: $width
+// 	margin-left: $gutter
+// 	margin-right: $gutter
+
+%grid-module
+	float: left
+	margin:
+		left: $gutter
+		right: $gutter
+	// temp
+	height: 50px
+	background: #000
+	color: #fff
+	text-align: center
+
+// [Pattern 2] 부모에게 '.fluid' 주는 방식.
+.grid-1
+	@extend %grid-module
+	$width: 60px
+	width: $width
+	.fluid &
+		width: percentage($width/$page-width)
+
+.grid-2
+	@extend %grid-module
+	$width: 140px
+	width: $width
+
+	.fluid &
+		width: percentage($width/$page-width)
