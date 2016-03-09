@@ -1,0 +1,70 @@
+// 9일차 수업 내용
+// ------------------------------------------
+
+// 환경설정 모듈 호출
+//@import config
+@import config_v1
+
+// 재사용 가능한 모듈들을 호출
+// @import modules/shapes/circle
+// @import modules/shapes/rectangle
+// @import modules/shapes/triangle
+
+// 사용자 정의 함수
+// User Defined Functions Module
+// @import modules/functions/hsla
+// @import modules/functions/rem
+
+// 사용자 정의 믹스인
+// User Defined Mixins Module
+// @import modules/mixins/font-size
+// @import modules/mixins/grid
+//@import modules/mixins/grid_for
+
+// IE6-8을 위한 핵 (권장 X)
+// @import modules/mixins/for-old-ie
+
+// 9일차 만든 모듈 호출
+// @import modules/study/condition
+// @import modules/mixins/contrast
+
+//
+ * --------------------------------
+ * 페이지 모듈 호출
+ * --------------------------------
+//@import pages/header
+
+//
+ * --------------------------------
+ * sns 모듈 호출
+ * --------------------------------
+@import modules/mixins/sns
+
+//
+ * --------------------------------
+ * 콘텐츠 블록(@content) 
+ * --------------------------------
+// ex.1
+$color: red
+=colors($color: darkred)
+	$color: yellow
+	background-color: $color
+	@content
+	border-color: $color
+
+.bg-border-color
+	+colors 
+	color: $color
+
+
+// ex.2
+=apply-to-ie6-only
+	* html
+		@content
+		background: red
+
++apply-to-ie6-only
+	color: darkred
+	& body
+		&::before
+			content: 'this is body'

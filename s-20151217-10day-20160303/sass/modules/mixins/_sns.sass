@@ -1,0 +1,176 @@
+//
+ * --------------------------------
+ * 10일차 
+ * --------------------------------
+// // [10day-20151217] - ex1. list, map
+// // list
+// $play-list: ("job-video", "hobby-video", "wedding-vido")
+// //데이터 유형을 체크할 때 사용되는 함수 
+// //@debug type-of($play-list) //list 출력 
+
+// //map
+// $play-map: ("job-video": "your job", "hobby-video": "your hobby", "wedding-vido": "your wedding")
+// @debug type-of($play-map) //map 출력
+
+// // play-list의 총 아이템 개수
+// @debug length($play-list) // 3개
+
+// // play-list의 아이템 추가
+// // @debug append(('a', 'b'), 'c') //
+// $play-list: append( $play-list, 'live-video')
+// @debug length($play-list) // 4개
+
+// //--------------------------------------------------------------------------
+// // [10day-20151217] - ex3. @while 문을 사용해서 리스트, 맵을 반복 순환하여 탐색
+// $play-list: ("job-video", "hobby-video", "wedding-vido")
+// $loop-start: 1 
+// $loop-end: length($play-list) // $loop-list 집합 내부의 아이템 총 개수만큼 반복
+
+// @while $loop-start <= $loop-end
+// 	.test-#{$loop-start}:before
+// 		content: 'loop item is #{$loop-start}'
+// 		$loop-start: $loop-start + 1 // 무한루프에 빠지지 않을려면 증가 표시
+
+// //--------------------------------------------------------------------------
+// // [10day-20151217] - ex4.'$play-list'의 아이템을 추출하는 함수 nth
+// $play-list: ("job-video", "hobby-video", "wedding-vido")
+// $play-map: ("job-video": "your job", "hobby-video": "your hobby", "wedding-vido": "your wedding")
+// $play-list: append( $play-list, 'live-video')
+
+// $loop-start: 1
+// $loop-end: length($play-list)
+// @while $loop-start <= $loop-end
+// 	$item: nth($play-list, $loop-start)
+// 	@debug $item //$play-list 아이템 출력
+// 	.#{$item}:before
+// 		content: 'loop item is #{$loop-start}'
+// 		$loop-start: $loop-start + 1
+
+// //--------------------------------------------------------------------------
+// // [10day-20151217] - ex5.이미지 사이즈가 동일한 경우 - list
+// $sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy)
+// $loop-start: 1
+// $loop-end: length($sns-list)
+
+// @while $loop-start <= $loop-end
+// 	$item: nth($sns-list, $loop-start)
+// 	@debug $item
+// 	.icon-sns.#{$item}
+// 		background-image: url("images/icons/sns/#{$item}.png")
+// 		width: 100px
+// 		height: 100px
+// 	$loop-start: $loop-start + 1
+
+//------------------------------------------------------------------------
+// [10day-20151217] - ex6 :  @while → @for 문으로 변경
+// $sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy)
+// $sns-list: set-nth($sns-list, 3, Linked-in)
+// $sns-list: append($sns-list, line)
+
+// // @for문 : sass의 for문은 1씩 증가만 된다.
+// // @for $i from 1 to length($sns-list) ==> (총 갯수 - 1 출력) 
+// // @for $i from 1 through length($sns-list) ==> (총 갯수 출력)
+// @for $i from 1 through length($sns-list)
+// 	$item: nth($sns-list, $i)
+// 	.icon-sns-#{$item}
+// 		background-image: url("images/icons/sns/#{$item}.png")
+
+//
+ * --------------------------------
+ * each 반복 순환문
+ * list, map 탐색
+ * --------------------------------
+
+// //--------------------------------------------------------------------------
+// // [10day-20151217] - ex6 : 이미지 사이즈가 각각 다를 경우 - map 
+// // map을 사용하려면 @each문 사용.
+// // $sns-map ==> _config_v1.scss 파일에 정의
+
+// [ex1] each
+// $sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy) 
+// @each $item in $sns-list
+// 	@debug $item
+// 	.icon-sns-#{$item}
+// 		background-image: url("images/icons/sns/#{$item}.png")
+
+// //--------------------------------------------------------------------------
+// [ex2] each
+// $sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy) 
+// @each $item in $sns-list
+// 	@debug $item
+// 	.icon-sns-#{$item}
+// 		@if $item != youtube //youtube만 빠진다.
+// 			background-image: url("images/icons/sns/#{$item}.png")
+
+// //--------------------------------------------------------------------------
+// [ex3] and 연산자
+// $sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy) 
+// @each $item in $sns-list
+// 	@debug $item
+// 	.icon-sns-#{$item}
+// 		// A and B  조건 :  둘 다 참이어야 참
+// 		// A or B  조건 : 둘 중에 하나라도 참이면 참
+// 		@if $item != youtube and $item != kakao-stroy
+// 			background-image: url("images/icons/sns/#{$item}.png")
+
+// //--------------------------------------------------------------------------
+// // ex4 - map
+// $sns-map: (youtube: 100px 100px, facebook: 120px 64px, linkedIn: 112px 60px, twitter: 100px 100px, instagram: 100px 100px, snapchat: 100px 100px, kakao-stroy: 100px 100px) 
+// @each $props in $sns-map
+// 	// @debug $props //$sns-map 내용
+// 	// @debug type-of($props) // list
+// 	// @debug length($props) // $sns-map 각각의 갯수 표시
+
+// 	$icon-name: nth($props, 1)
+// 	$icon-dimension: nth($props, 2)
+// 	$icon-width: nth($icon-dimension, 1)
+// 	$icon-height: nth($icon-dimension, 2)
+// 	// @debug '가로 값은? #{$icon-width}'
+// 	// @debug '세로 값은? #{$icon-height}'
+
+// 	.icon-sns-#{$icon-name}
+// 		background-image: url("images/icons/sns/#{$icon-name}.png")
+// 		width: $icon-width
+// 		height: $icon-height
+
+// //--------------------------------------------------------------------------
+// ex5 - map - $sns-map-ver변수는 config_v1파일에 정의
+// map-get(): $sns-map-ver변수에서 path값 추출
+// $sns-map-path: map-get($sns-map-ver, path)
+
+// @each $props in $sns-map-ver
+// 	$icon-name: nth($props, 1)
+// 	$icon-dimension: nth($props, 2)
+
+// 	@if length($icon-dimension) > 1
+// 		$icon-width: nth($icon-dimension, 1)
+// 		$icon-height: nth($icon-dimension, 2)
+// 		$icon-extension: nth($icon-dimension, 3)
+
+// 		.icon-sns-#{$icon-name}
+// 			background-image: url(#{$sns-map-path}#{$icon-name}.#{$icon-extension})
+// 			background-repeat: no-repeat
+// 			width: $icon-width
+// 			height: $icon-height
+
+//--------------------------------------------------------------------------
+// [ex6] - map - $props 대신 
+// each의 key:value의 위치가 정해져 있어 임의 변수로 넣어도 출력이 된다. 
+$sns-map-path: map-get($sns-map-ver, path)
+
+@each $icon-name, $icon-dimension in $sns-map-ver
+	// @debug $icon-name // key 
+	// @debug $icon-dimension //value
+
+	@if length($icon-dimension) > 1
+		$icon-width: nth($icon-dimension, 1)
+		$icon-height: nth($icon-dimension, 2)
+		$icon-extension: nth($icon-dimension, 3)
+
+		.icon-sns-#{$icon-name}
+			background-image: url(#{$sns-map-path}#{$icon-name}.#{$icon-extension})
+			background-repeat: no-repeat
+			width: $icon-width
+			height: $icon-height
+
+

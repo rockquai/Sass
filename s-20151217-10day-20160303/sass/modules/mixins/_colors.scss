@@ -1,0 +1,23 @@
+@mixin link-colors(
+	$link: #3fb5cb,
+	$visited: false,
+	$hover: darken($link, 30%),
+	$active: false,
+	$focus: false
+) {
+	& { color: $link; }
+	@if $visited {
+	&:visited { color: $visited; } }
+	@if $hover {
+	&:hover { color: $hover; } }
+	@if $active {
+	&:active { color: $active; } }
+	@if $focus {
+	&:focus { color: $focus; } }
+}
+
+// $main-bg: #000;
+// .main{
+// 	color: if( $main-bg == black, #fff, #000 );
+
+// }

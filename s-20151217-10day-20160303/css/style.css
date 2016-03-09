@@ -1,0 +1,71 @@
+.icon-sns-youtube {
+  background-image: url(images/icons/sns/youtube.png);
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+}
+
+.icon-sns-facebook {
+  background-image: url(images/icons/sns/facebook.png);
+  background-repeat: no-repeat;
+  width: 120px;
+  height: 100px;
+}
+
+.icon-sns-linkedIn {
+  background-image: url(images/icons/sns/linkedIn.gif);
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 100px;
+}
+
+.icon-sns-twitter {
+  background-image: url(images/icons/sns/twitter.jpg);
+  background-repeat: no-repeat;
+  width: 300px;
+  height: 100px;
+}
+
+.icon-sns-instagram {
+  background-image: url(images/icons/sns/instagram.bmp);
+  background-repeat: no-repeat;
+  width: 400px;
+  height: 100px;
+}
+
+.icon-sns-snapchat {
+  background-image: url(images/icons/sns/snapchat.jpg);
+  background-repeat: no-repeat;
+  width: 500px;
+  height: 100px;
+}
+
+.icon-sns-kakao-stroy {
+  background-image: url(images/icons/sns/kakao-stroy.png);
+  background-repeat: no-repeat;
+  width: 600px;
+  height: 100px;
+}
+
+.icon-sns-line {
+  background-image: url(images/icons/sns/line.jpeg);
+  background-repeat: no-repeat;
+  width: 340px;
+  height: 124px;
+}
+
+.bg-border-color {
+  background-color: yellow;
+  border-color: yellow;
+  color: red;
+}
+
+* html {
+  color: darkred;
+  background: red;
+}
+* html body::before {
+  content: "this is body";
+}
+
+/*# sourceMappingURL=style.css.map */

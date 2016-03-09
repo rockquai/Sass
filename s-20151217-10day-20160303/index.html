@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--[if !IE]><!-->
+<html lang="ko-KR" class="no-js">
+<!--<![endif]-->
+<!--[if IE 8]><html lang="ko-KR" class="ie lt-ie10 ie8 no-js"><![endif]-->
+<!--[if IE 9]><html lang="ko-KR" class="ie lt-ie10 ie9 no-js"><![endif]-->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<title>Sass - Condition &amp; Loop - 10day review</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- 
+	* [10day review] sass 함수 & sass 반복문(@while, @for, @each) & compass
+
+	1. Sass 데이터 유형
+	ㄴ list : 공백이나 콤마로 구분되어 지는 것 
+	ㄴ map : 키워드와 속성들의 집합. (map형태는 scss 형태가 좋다. 가독성↑.)
+
+	2. sass 함수
+	- type-of: 데이터 유형 체크
+	- length: 총 아이템 개수
+	- nth : 아이템 추출
+	- append: 아이템 추가
+
+	e.g) sass 함수
+	$play-list: ("job-video", "hobby-video", "wedding-vido")
+	@debug type-of($play-list) //list
+
+	$play-map: ("job-video": "your job", "hobby-video": "your hobby", "wedding-vido": "your wedding")
+	@debug type-of($play-map) //map
+
+	$play-list: append( $play-list, 'live-video')
+	@debug length($play-list) // 4개
+
+	$play-list: set-nth($play-list, 2, Linked-in)
+	//$play-list: ("job-video", "hobby-video", "Linked-in", wedding-vido")
+
+	3. Sass 반복문
+	- @while
+	- @for
+	- @each
+
+	3-1. @while문
+	e.g.)
+	$sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy)
+	$loop-start: 1
+	$loop-end: length($sns-list)
+
+	@while $loop-start <= $loop-end
+		$item: nth($sns-list, $loop-start)
+		@debug $item
+		.icon-sns.#{$item}
+			background-image: url("images/icons/sns/#{$item}.png")
+			width: 100px
+			height: 100px
+		$loop-start: $loop-start + 1
+
+	3-2. @for문: sass의 for문은 항상 1씩 증가만 된다. @while문을 사용하면 증가값 조정 가능.
+	e.g.) 
+	$sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy)
+	$sns-list: set-nth($sns-list, 3, Linked-in)
+	$sns-list: append($sns-list, line)
+
+	// @for $i from 1 to length($sns-list) ==> (총 갯수 - 1 출력) 
+	// @for $i from 1 through length($sns-list) ==> (총 갯수 출력)
+	@for $i from 1 through length($sns-list)
+		$item: nth($sns-list, $i)
+		.icon-sns-#{$item}
+			background-image: url("images/icons/sns/#{$item}.png")
+
+	3-3. @each 
+	e.g. 1) 
+	$sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy) 
+	@each $item in $sns-list
+		@debug $item //
+		.icon-sns-#{$item}
+			background-image: url("images/icons/sns/#{$item}.png")
+
+	e.g. 2) list중에 youtube를 빼고 싶을 때 
+	$sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy) 
+	@each $item in $sns-list
+		@debug $item
+		.icon-sns-#{$item}
+			@if $item != youtube //youtube만 빠진다.
+				background-image: url("images/icons/sns/#{$item}.png")
+
+	e.g. 3) and 연산자 (A and B  조건 :  둘 다 참이어야 참)
+	$sns-list: (youtube facebook linkedIn twitter instagram snapchat kakao-stroy) 
+	@each $item in $sns-list
+		@debug $item
+		.icon-sns-#{$item}
+			@if $item != youtube and $item != kakao-stroy
+				background-image: url("images/icons/sns/#{$item}.png")
+
+	e.g. 4) @each - map탐색
+	$sns-map: (youtube: 100px 100px, facebook: 120px 64px, linkedIn: 112px 60px, twitter: 100px 100px, instagram: 100px 100px, snapchat: 100px 100px, kakao-stroy: 100px 100px) 
+	@each $props in $sns-map
+		// @debug $props //$sns-map 내용
+		// @debug type-of($props) // list
+		// @debug length($props) // $sns-map 각각의 갯수 표시
+
+		$icon-name: nth($props, 1)
+		$icon-dimension: nth($props, 2)
+		$icon-width: nth($icon-dimension, 1)
+		$icon-height: nth($icon-dimension, 2)
+
+		.icon-sns-#{$icon-name}
+			background-image: url("images/icons/sns/#{$icon-name}.png")
+			width: $icon-width
+			height: $icon-height
+
+	e.g. 5) @each - map탐색 - type1
+	$sns-map-path: map-get($sns-map-ver, path)
+
+	@each $props in $sns-map-ver
+		$icon-name: nth($props, 1)
+		$icon-dimension: nth($props, 2)
+
+		@if length($icon-dimension) > 1
+			$icon-width: nth($icon-dimension, 1)
+			$icon-height: nth($icon-dimension, 2)
+			$icon-extension: nth($icon-dimension, 3)
+
+			.icon-sns-#{$icon-name}
+				background-image: url(#{$sns-map-path}#{$icon-name}.#{$icon-extension})
+				background-repeat: no-repeat
+				width: $icon-width
+				height: $icon-height
+
+	e.g. 6) @each - map탐색 - type2 ) $props 대신 변수 사용
+	$sns-map-path: map-get($sns-map-ver, path)
+
+	@each $icon-name, $icon-dimension in $sns-map-ver
+		@debug $icon-name // key 
+		@debug $icon-dimension //value
+
+		@if length($icon-dimension) > 1
+			$icon-width: nth($icon-dimension, 1)
+			$icon-height: nth($icon-dimension, 2)
+			$icon-extension: nth($icon-dimension, 3)
+
+			.icon-sns-#{$icon-name}
+				background-image: url(#{$sns-map-path}#{$icon-name}.#{$icon-extension})
+				background-repeat: no-repeat
+				width: $icon-width
+				height: $icon-height
+
+	4. compass(http://compass-style.org/)
+	4-1. sass-globbing 설치
+	gem list
+	gem i sass-globbing
+
+	4-2. compass 설치
+	gem update --stytem 
+	gem install compass 
+
+ -->
+	<div class="app-container">
+		<header class="app-header">
+			<a href="" role="button" class="back-button">Back</a>
+			<h1 class="app-title">KIPFA Sass App</h1>
+		</header>
+	</div>
+
+</body>
+</html>
