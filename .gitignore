@@ -1,0 +1,10 @@
+# Git
+node_modules
+bower_components
+
+# Photoshop
+*.psd
+
+# SASS
+.sass-cache
+*.css.map
